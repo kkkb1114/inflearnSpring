@@ -5,6 +5,7 @@ import com.example.inflearnSpring.repository.MemoryMemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
 
@@ -12,8 +13,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MemberServiceTest {
 
-    MemberService memberService = new MemberService();
-    MemoryMemberRepository memberRepository = new MemoryMemberRepository();
+    MemoryMemberRepository memberRepository;
+    MemberService memberService;
+
+    @Autowired
+    public MemberServiceTest(MemoryMemberRepository memberRepository, MemberService memberService){
+        this.memberRepository = memberRepository;
+        this.memberService = memberService;
+    }
 
     @AfterEach
     public void afterEach() {

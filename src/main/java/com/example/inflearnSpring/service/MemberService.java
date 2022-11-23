@@ -3,12 +3,21 @@ package com.example.inflearnSpring.service;
 import com.example.inflearnSpring.domain.Member;
 import com.example.inflearnSpring.repository.MemberRepository;
 import com.example.inflearnSpring.repository.MemoryMemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class MemberService {
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
+
+    private final MemberRepository memberRepository;
+
+    @Autowired
+    public MemberService(MemberRepository memberRepository){
+        this.memberRepository = memberRepository;
+    }
 
     // 회원 가입
     public Long join(Member member){
@@ -19,10 +28,6 @@ public class MemberService {
 
 
     public void checkMember(Member member){
-        MemberService memberService = new MemberService();
-        for (Member member1 : memberService.findAllMembers()){
-            System.out.println("asdsada"+member1.getName());
-        }
         Optional<Member> result = memberRepository.findByName(member.getName());
         // .ifPresent은 Optional<>의 옵션으로 null이 아니라면 동작한다.
         // 따라서 새로 들어온 member 객체가 memberRepository.findByName()통해 있는지 확인 결과 있다면 이미 가입된 회원 이름인 것이다.
