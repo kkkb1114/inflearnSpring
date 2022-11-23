@@ -19,6 +19,10 @@ public class MemberService {
 
 
     public void checkMember(Member member){
+        MemberService memberService = new MemberService();
+        for (Member member1 : memberService.findAllMembers()){
+            System.out.println("asdsada"+member1.getName());
+        }
         Optional<Member> result = memberRepository.findByName(member.getName());
         // .ifPresent은 Optional<>의 옵션으로 null이 아니라면 동작한다.
         // 따라서 새로 들어온 member 객체가 memberRepository.findByName()통해 있는지 확인 결과 있다면 이미 가입된 회원 이름인 것이다.

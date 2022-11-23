@@ -15,6 +15,11 @@ class MemberServiceTest {
     MemberService memberService = new MemberService();
     MemoryMemberRepository memberRepository = new MemoryMemberRepository();
 
+    @AfterEach
+    public void afterEach() {
+        memberRepository.claerStore();
+    }
+
     /**
      * given: (데이터)
      * when: (동작)
@@ -43,9 +48,10 @@ class MemberServiceTest {
         member2.setName("김기범2");
 
         //when
-        memberService.join(member1);
-        IllegalStateException illegalStateException = assertThrows(IllegalStateException.class, () -> memberService.join(member2));
-        Assertions.assertThat(illegalStateException.getMessage()).isEqualTo("");
+        //memberService.join(member1);
+
+        System.out.println("111111111111111"+assertThrows(IllegalStateException.class, () -> memberService.join(member2)).getMessage());
+        Assertions.assertThat(assertThrows(IllegalStateException.class, () -> memberService.join(member2)).getMessage()).isEqualTo("이미 존재하는 회원입니다.");
         //then
 
     }
@@ -61,8 +67,4 @@ class MemberServiceTest {
     void findOneMember() {
     }
 
-    @AfterEach
-    public void afterEach() {
-        memberRepository.claerStore();
-    }
 }
